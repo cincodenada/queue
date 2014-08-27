@@ -308,17 +308,18 @@ class BeanstalkdSocket {
 
 		switch ($status) {
 			case 'RESERVED':
-				$id = (integer)strtok(' ');
-				 $length = (integer)strtok(' ');
-				$body = $this->_read($id);
+                $id = (integer)strtok(' ');
+                $length = (integer)strtok(' ');
+                $body = $this->_read($id);
 
-				while (strlen($body) < $length) {
-					$body .= $this->_read($id);
-				}
-				$data = array(
-					'id' => $id,
-					'body' => $body
-				);
+                while (strlen($body) < $length) {
+                    $body .= $this->_read($id);
+                }
+                $data = array(
+                    'id' => $id,
+                    'body' => $body
+                );
+
 				return $data;
 			case 'DEADLINE_SOON':
 			case 'TIMED_OUT':
