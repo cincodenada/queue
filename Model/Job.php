@@ -53,8 +53,12 @@ class Job extends Model {
 		if ($cached && isset($status)) {
 			return $status;
 		}
-		$Manager = ConnectionManager::getInstance();
-		@$DataSource = $Manager->getDataSource($this->useDbConfig);
+
+        try {
+            $DataSource = @ConnectionManager::getDataSource($this->useDbConfig);
+        } catch (\InternalErrorException $e) {
+            return false;
+        }
 
 		return $status = $DataSource && $DataSource->isConnected();
 	}
